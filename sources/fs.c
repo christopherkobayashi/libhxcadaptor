@@ -170,7 +170,7 @@ FILE *hxc_fopen (const char *filename, const char *mode)
 				case 'b':
 					oflags |= O_BINARY;
 					break;
-	#endif
+		#endif
 				case 'a':
 					rwflags = O_WRONLY;
 					oflags |= O_CREAT;
@@ -200,20 +200,44 @@ FILE *hxc_fopen (const char *filename, const char *mode)
 
 		if(append)
 		{
+#if defined (WIN32)
+			if(_lseek(fd,0,SEEK_END) == -1)
+			{
+				_close (fd);
+
+				return NULL;
+			}
+#else
 			if(lseek(fd,0,SEEK_END) == -1)
 			{
 				close (fd);
+
 				return NULL;
 			}
+#endif
 		}
 		else
 		{
+#if defined (WIN32)
+			_lseek(fd,0,SEEK_SET);
+#else
 			lseek(fd,0,SEEK_SET);
+#endif
 		}
 
+#if defined (WIN32)
+		stream = _fdopen(fd,mode);
+		if(stream == NULL)
+		{
+			_close (fd);
+		}
+#else
 		stream = fdopen(fd,mode);
 		if(stream == NULL)
-			close(fd);
+		{
+			close (fd);
+		}
+#endif
 	}
 
 	return stream;
@@ -474,7 +498,7 @@ int hxc_mkdir(char * folder)
 {
 
 #ifdef WIN32
-	mkdir(folder);
+	_mkdir(folder);
 #else
 	mkdir(folder,0777);
 #endif

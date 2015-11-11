@@ -1,7 +1,7 @@
 // ISO C9x  compliant stdint.h for Microsoft Visual Studio
 // Based on ISO/IEC 9899:TC2 Committee draft (May 6, 2005) WG14/N1124 
 // 
-//  Copyright (c) 2006-2013 Alexander Chemeris
+//  Copyright (c) 2006-2008 Alexander Chemeris
 // 
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are met:
@@ -13,9 +13,8 @@
 //      notice, this list of conditions and the following disclaimer in the
 //      documentation and/or other materials provided with the distribution.
 // 
-//   3. Neither the name of the product nor the names of its contributors may
-//      be used to endorse or promote products derived from this software
-//      without specific prior written permission.
+//   3. The name of the author may be used to endorse or promote products
+//      derived from this software without specific prior written permission.
 // 
 // THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR IMPLIED
 // WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
@@ -41,10 +40,6 @@
 #pragma once
 #endif
 
-#if _MSC_VER >= 1600 // [
-#include <stdint.h>
-#else // ] _MSC_VER >= 1600 [
-
 #include <limits.h>
 
 // For Visual Studio 6 in C++ mode and for many Visual Studio versions when
@@ -57,8 +52,8 @@ extern "C" {
 #  include <wchar.h>
 #ifdef __cplusplus
 }
-#endif
-*/
+#endif*/
+
 // Define _W64 macros to mark types changing their size, like intptr_t.
 #ifndef _W64
 #  if !defined(__midl) && (defined(_X86_) || defined(_M_IX86)) && _MSC_VER >= 1300
@@ -243,17 +238,10 @@ typedef uint64_t  uintmax_t;
 #define UINT64_C(val) val##ui64
 
 // 7.18.4.2 Macros for greatest-width integer constants
-// These #ifndef's are needed to prevent collisions with <boost/cstdint.hpp>.
-// Check out Issue 9 for the details.
-#ifndef INTMAX_C //   [
-#  define INTMAX_C   INT64_C
-#endif // INTMAX_C    ]
-#ifndef UINTMAX_C //  [
-#  define UINTMAX_C  UINT64_C
-#endif // UINTMAX_C   ]
+#define INTMAX_C   INT64_C
+#define UINTMAX_C  UINT64_C
 
 #endif // __STDC_CONSTANT_MACROS ]
 
-#endif // _MSC_VER >= 1600 ]
 
 #endif // _MSC_STDINT_H_ ]
