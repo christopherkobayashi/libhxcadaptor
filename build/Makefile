@@ -1,5 +1,3 @@
-#CC=i386-pc-linux-gcc
-CC=gcc
 AR=ar
 
 UNAME := $(shell uname)
@@ -16,7 +14,7 @@ EXEC=libhxcadaptor.a
 # CFLAGS += -fPIC (in per-platform overrides)
 
 ifeq ($(UNAME), Linux)
-CFLAGS += -fPIC
+CC=gcc
 endif
 
 ifeq ($(UNAME), Darwin)
