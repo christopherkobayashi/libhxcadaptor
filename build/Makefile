@@ -9,6 +9,11 @@ INCLUDES = -I$(BASEDIR)/ -I ../../libhxcfe/sources -I ../../libusbhxcfe/sources
 
 CFLAGS=-O3 $(INCLUDES)
 LDFLAGS= -g -shared -lc -lm  -ldl
+EXEC=libhxcadaptor.a
+
+# For shared libraries:
+# EXEC=libhxcadaptor.so
+# CFLAGS += -fPIC (in per-platform overrides)
 
 ifeq ($(UNAME), Linux)
 CFLAGS += -fPIC
@@ -18,8 +23,6 @@ ifeq ($(UNAME), Darwin)
 CFLAGS += -arch i386 -mmacosx-version-min=10.5
 LDFLAGS += -arch i386 -mmacosx-version-min=10.5
 endif
-
-EXEC=libhxcadaptor.a
 
 all: $(EXEC)
 
